@@ -1,0 +1,289 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <title>{% if profile %}{{ profile.name }} - Portfolio{% else %}My Portfolio{% endif %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#hero" class="nav-logo">{% if profile %}{{ profile.name|truncatewords:1 }}{% else %}Portfolio{% endif %}</a>
+            <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="#hero" class="nav-link">Home</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#skills" class="nav-link">Skills</a></li>
+                <li><a href="#projects" class="nav-link">Projects</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section id="hero" class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <p class="hero-greeting">Hello, I'm</p>
+                <h1 class="hero-name">{% if profile %}{{ profile.name }}{% else %}Your Name{% endif %}</h1>
+                <p class="hero-tagline">{% if profile %}{{ profile.tagline }}{% else %}Full-Stack Web Developer{% endif %}</p>
+                <div class="hero-buttons">
+                    <a href="#projects" class="btn btn-primary">View My Work</a>
+                    <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="hero-shape"></div>
+                <div class="hero-shape-2"></div>
+            </div>
+        </div>
+        <a href="#about" class="scroll-indicator">
+            <span>Scroll</span>
+            <i class="fas fa-chevron-down"></i>
+        </a>
+    </section>
+
+    <section id="about" class="about section">
+        <div class="container">
+            <h2 class="section-title">About Me</h2>
+            <div class="about-content">
+                {% if profile and profile.photo %}
+                <div class="about-image">
+                    <img src="{{ profile.photo.url }}" alt="{{ profile.name }}">
+                </div>
+                {% endif %}
+                <div class="about-text">
+                    {% if profile %}
+                    <p>{{ profile.bio|linebreaks }}</p>
+                    {% if profile.resume %}
+                    <a href="{{ profile.resume.url }}" class="btn btn-outline" download>
+                        <i class="fas fa-download"></i> Download Resume
+                    </a>
+                    {% endif %}
+                    {% else %}
+                    <p>Welcome to my portfolio! I'm a passionate developer who loves creating beautiful and functional web applications. I specialize in building modern, responsive websites and applications using the latest technologies.</p>
+                    <p>With a strong foundation in both front-end and back-end development, I bring ideas to life through clean code and thoughtful design. I'm always eager to learn new technologies and take on challenging projects.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills" class="skills section">
+        <div class="container">
+            <h2 class="section-title">Skills & Expertise</h2>
+            <div class="skills-grid">
+                {% if skill_categories %}
+                    {% for category in skill_categories %}
+                    <div class="skill-category">
+                        <h3 class="skill-category-title">{{ category.name }}</h3>
+                        <div class="skill-list">
+                            {% for skill in category.skills.all %}
+                            <div class="skill-item">
+                                {% if skill.icon %}<i class="{{ skill.icon }}"></i>{% endif %}
+                                <span>{{ skill.name }}</span>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="skill-category">
+                        <h3 class="skill-category-title">Frontend</h3>
+                        <div class="skill-list">
+                            <div class="skill-item"><i class="fab fa-html5"></i><span>HTML5</span></div>
+                            <div class="skill-item"><i class="fab fa-css3-alt"></i><span>CSS3</span></div>
+                            <div class="skill-item"><i class="fab fa-js"></i><span>JavaScript</span></div>
+                            <div class="skill-item"><i class="fab fa-react"></i><span>React</span></div>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h3 class="skill-category-title">Backend</h3>
+                        <div class="skill-list">
+                            <div class="skill-item"><i class="fab fa-python"></i><span>Python</span></div>
+                            <div class="skill-item"><i class="fab fa-node-js"></i><span>Node.js</span></div>
+                            <div class="skill-item"><i class="fas fa-database"></i><span>PostgreSQL</span></div>
+                            <div class="skill-item"><i class="fab fa-git-alt"></i><span>Git</span></div>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h3 class="skill-category-title">Tools & Other</h3>
+                        <div class="skill-list">
+                            <div class="skill-item"><i class="fab fa-docker"></i><span>Docker</span></div>
+                            <div class="skill-item"><i class="fab fa-aws"></i><span>AWS</span></div>
+                            <div class="skill-item"><i class="fab fa-figma"></i><span>Figma</span></div>
+                            <div class="skill-item"><i class="fas fa-terminal"></i><span>Linux</span></div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="projects section">
+        <div class="container">
+            <h2 class="section-title">Featured Projects</h2>
+            <div class="projects-grid">
+                {% if projects %}
+                    {% for project in projects %}
+                    <article class="project-card">
+                        <div class="project-image">
+                            {% if project.image %}
+                            <img src="{{ project.image.url }}" alt="{{ project.title }}">
+                            {% else %}
+                            <div class="project-placeholder">
+                                <i class="fas fa-code"></i>
+                            </div>
+                            {% endif %}
+                            <div class="project-overlay">
+                                <div class="project-links">
+                                    {% if project.live_url %}
+                                    <a href="{{ project.live_url }}" target="_blank" rel="noopener" class="project-link" title="View Live">
+                                        <i class="fas fa-external-link-alt"></i>
+                                    </a>
+                                    {% endif %}
+                                    {% if project.github_url %}
+                                    <a href="{{ project.github_url }}" target="_blank" rel="noopener" class="project-link" title="View Code">
+                                        <i class="fab fa-github"></i>
+                                    </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-content">
+                            <h3 class="project-title">{{ project.title }}</h3>
+                            <p class="project-description">{{ project.description|truncatewords:25 }}</p>
+                            {% if project.technologies %}
+                            <div class="project-tech">
+                                {% for tech in project.get_technologies_list %}
+                                <span class="tech-tag">{{ tech }}</span>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+                    </article>
+                    {% endfor %}
+                {% else %}
+                    <article class="project-card">
+                        <div class="project-image">
+                            <div class="project-placeholder"><i class="fas fa-shopping-cart"></i></div>
+                            <div class="project-overlay">
+                                <div class="project-links">
+                                    <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i></a>
+                                    <a href="#" class="project-link"><i class="fab fa-github"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-content">
+                            <h3 class="project-title">E-Commerce Platform</h3>
+                            <p class="project-description">A full-featured online store with cart functionality, payment integration, and admin dashboard.</p>
+                            <div class="project-tech">
+                                <span class="tech-tag">React</span>
+                                <span class="tech-tag">Node.js</span>
+                                <span class="tech-tag">MongoDB</span>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="project-card">
+                        <div class="project-image">
+                            <div class="project-placeholder"><i class="fas fa-tasks"></i></div>
+                            <div class="project-overlay">
+                                <div class="project-links">
+                                    <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i></a>
+                                    <a href="#" class="project-link"><i class="fab fa-github"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-content">
+                            <h3 class="project-title">Task Management App</h3>
+                            <p class="project-description">A collaborative project management tool with real-time updates and team features.</p>
+                            <div class="project-tech">
+                                <span class="tech-tag">Vue.js</span>
+                                <span class="tech-tag">Django</span>
+                                <span class="tech-tag">PostgreSQL</span>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="project-card">
+                        <div class="project-image">
+                            <div class="project-placeholder"><i class="fas fa-chart-line"></i></div>
+                            <div class="project-overlay">
+                                <div class="project-links">
+                                    <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i></a>
+                                    <a href="#" class="project-link"><i class="fab fa-github"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-content">
+                            <h3 class="project-title">Analytics Dashboard</h3>
+                            <p class="project-description">Interactive data visualization dashboard with real-time charts and reporting features.</p>
+                            <div class="project-tech">
+                                <span class="tech-tag">Python</span>
+                                <span class="tech-tag">D3.js</span>
+                                <span class="tech-tag">Flask</span>
+                            </div>
+                        </div>
+                    </article>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact section">
+        <div class="container">
+            <h2 class="section-title">Let's Connect</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <p class="contact-text">I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision. Feel free to reach out!</p>
+                    
+                    <div class="contact-details">
+                        {% if profile %}
+                        <a href="mailto:{{ profile.email }}" class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>{{ profile.email }}</span>
+                        </a>
+                        {% else %}
+                        <a href="mailto:hello@example.com" class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>hello@example.com</span>
+                        </a>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="social-links">
+                        {% if social_links %}
+                            {% for link in social_links %}
+                            <a href="{{ link.url }}" target="_blank" rel="noopener" class="social-link" title="{{ link.get_platform_display }}">
+                                <i class="{{ link.icon }}"></i>
+                            </a>
+                            {% endfor %}
+                        {% else %}
+                            <a href="#" class="social-link" title="GitHub"><i class="fab fa-github"></i></a>
+                            <a href="#" class="social-link" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" class="social-link" title="Twitter"><i class="fab fa-twitter"></i></a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; {% now "Y" %} {% if profile %}{{ profile.name }}{% else %}Your Name{% endif %}. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>
