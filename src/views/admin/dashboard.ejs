@@ -188,6 +188,68 @@
         </div>
 
         <div class="card">
+            <h2>Skill Categories</h2>
+            <form method="POST" action="/admin/skill-category">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Category Name</label>
+                        <input type="text" name="name" placeholder="e.g., Frontend Development" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn">Add Category</button>
+            </form>
+            <div class="items-list">
+                <% skillCategories.forEach(function(cat) { %>
+                    <div class="item">
+                        <span class="item-title"><%= cat.name %></span>
+                        <div class="item-actions">
+                            <form method="POST" action="/admin/skill-category/delete/<%= cat.id %>" style="display:inline;">
+                                <button type="submit" class="btn btn-danger btn-small">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                <% }); %>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Skills</h2>
+            <form method="POST" action="/admin/skill">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Skill Name</label>
+                        <input type="text" name="name" placeholder="e.g., React" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Icon (Font Awesome class)</label>
+                        <input type="text" name="icon" placeholder="e.g., fab fa-react">
+                    </div>
+                    <div class="form-group">
+                        <label>Category</label>
+                        <select name="category_id" style="width:100%;padding:12px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:8px;color:#fff;">
+                            <% skillCategories.forEach(function(cat) { %>
+                                <option value="<%= cat.id %>"><%= cat.name %></option>
+                            <% }); %>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn">Add Skill</button>
+            </form>
+            <div class="items-list">
+                <% skills.forEach(function(skill) { %>
+                    <div class="item">
+                        <span class="item-title"><i class="<%= skill.icon %>"></i> <%= skill.name %></span>
+                        <div class="item-actions">
+                            <form method="POST" action="/admin/skill/delete/<%= skill.id %>" style="display:inline;">
+                                <button type="submit" class="btn btn-danger btn-small">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                <% }); %>
+            </div>
+        </div>
+
+        <div class="card">
             <h2>Social Links</h2>
             <form method="POST" action="/admin/social">
                 <div class="form-grid">
