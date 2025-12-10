@@ -173,7 +173,7 @@ body {
     font-family: 'Space Grotesk', sans-serif;
     font-size: 1.5rem;
     font-weight: 700;
-    color: var(--text);
+    color: whitesmoke;
 }
 
 .logo-dot {
@@ -373,9 +373,6 @@ body {
     font-weight: 800;
     line-height: 1.1;
     margin-bottom: 16px;
-    background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.8) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
     background-clip: text;
 }
 

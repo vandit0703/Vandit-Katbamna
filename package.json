@@ -7,7 +7,11 @@
     "start": "node src/server.js",
     "dev": "node src/server.js"
   },
-  "keywords": ["portfolio", "nodejs", "express"],
+  "keywords": [
+    "portfolio",
+    "nodejs",
+    "express"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {

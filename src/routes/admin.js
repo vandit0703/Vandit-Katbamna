@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
-const db = require('../database');
 
 function isAuthenticated(req, res, next) {
     if (req.session && req.session.userId) {
