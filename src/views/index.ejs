@@ -4,28 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <title><%= profile ? profile.name : 'Portfolio' %> - 3D Portfolio</title>
+    <title><%= profile ? profile.name : 'Vandit Katbamna' %> - Portfolio</title>
+
     <link rel="stylesheet" href="/css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body>
     <div class="cursor"></div>
     <div class="cursor-follower"></div>
 
+    <!-- NAVBAR -->
     <nav class="navbar" id="navbar">
         <div class="nav-container">
             <a href="#hero" class="nav-logo">
-                <span class="logo-text"><%= profile ? profile.name.split(' ')[0] : 'Portfolio' %></span>
+                <span class="logo-text"><%= profile ? profile.name.split(' ')[0] : 'Vandit' %></span>
                 <span class="logo-dot"></span>
             </a>
+
             <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">
-                <span></span>
-                <span></span>
-                <span></span>
+                <span></span><span></span><span></span>
             </button>
+
             <ul class="nav-menu" id="nav-menu">
                 <li><a href="#hero" class="nav-link">Home</a></li>
                 <li><a href="#about" class="nav-link">About</a></li>
@@ -36,6 +39,7 @@
         </div>
     </nav>
 
+    <!-- HERO SECTION -->
     <section id="hero" class="hero">
         <div class="hero-bg">
             <div class="floating-shapes">
@@ -45,18 +49,21 @@
                 <div class="shape shape-4"></div>
                 <div class="shape shape-5"></div>
             </div>
-            <div class="grid-overlay"></div>
         </div>
+
         <div class="hero-content">
             <div class="hero-text">
                 <div class="hero-badge">
                     <span class="badge-dot"></span>
                     <span>Available for work</span>
                 </div>
-                <h1 class="hero-name glitch" data-text="<%= profile ? profile.name : 'Your Name' %>">
-                    <%= profile ? profile.name : 'Your Name' %>
+
+                <h1 class="hero-name glitch" data-text="<%= profile.name %>">
+                    <%= profile.name %>
                 </h1>
-                <p class="hero-tagline"><%= profile ? profile.tagline : 'Full-Stack Developer' %></p>
+
+                <p class="hero-tagline"><%= profile.title %></p>
+
                 <div class="hero-buttons">
                     <a href="#projects" class="btn btn-primary">
                         <span>View Projects</span>
@@ -67,6 +74,7 @@
                     </a>
                 </div>
             </div>
+
             <div class="hero-3d">
                 <div class="cube-container">
                     <div class="cube">
@@ -80,32 +88,31 @@
                 </div>
             </div>
         </div>
+
         <a href="#about" class="scroll-indicator">
-            <div class="mouse">
-                <div class="wheel"></div>
-            </div>
+            <div class="mouse"><div class="wheel"></div></div>
             <span>Scroll Down</span>
         </a>
     </section>
 
+    <!-- ABOUT ME -->
     <section id="about" class="about section">
         <div class="container">
             <div class="section-header">
                 <span class="section-tag">Introduction</span>
                 <h2 class="section-title">About Me</h2>
             </div>
+
             <div class="about-content">
                 <div class="about-card glass-card">
                     <div class="about-text">
-                        <% if (profile && profile.bio) { %>
-                            <% profile.bio.split('\n').forEach(function(para) { %>
+                        <% if (aboutMe) { %>
+                            <% aboutMe.split('\n').forEach(function(para) { %>
                                 <p><%= para %></p>
                             <% }); %>
-                        <% } else { %>
-                            <p>Welcome to my portfolio! I'm a passionate developer who loves creating beautiful and functional web applications.</p>
-                            <p>I specialize in building modern, responsive websites using the latest technologies.</p>
                         <% } %>
                     </div>
+
                     <div class="about-stats">
                         <div class="stat-item">
                             <span class="stat-number">2+</span>
@@ -125,150 +132,125 @@
         </div>
     </section>
 
+    <!-- SKILLS SECTION -->
     <section id="skills" class="skills section">
         <div class="container">
             <div class="section-header">
                 <span class="section-tag">Expertise</span>
                 <h2 class="section-title">Skills & Technologies</h2>
             </div>
+
             <div class="skills-grid">
-                <% if (skillCategories && skillCategories.length > 0) { %>
-                    <% skillCategories.forEach(function(category) { %>
-                        <div class="skill-category glass-card" data-tilt>
-                            <div class="category-icon">
-                                <% if (category.name.includes('Frontend')) { %>
-                                    <i class="fas fa-palette"></i>
-                                <% } else if (category.name.includes('Backend')) { %>
-                                    <i class="fas fa-server"></i>
-                                <% } else { %>
-                                    <i class="fas fa-tools"></i>
-                                <% } %>
-                            </div>
-                            <h3 class="category-title"><%= category.name %></h3>
-                            <div class="skill-list">
-                                <% category.skills.forEach(function(skill) { %>
-                                    <div class="skill-item">
-                                        <% if (skill.icon) { %><i class="<%= skill.icon %>"></i><% } %>
-                                        <span><%= skill.name %></span>
-                                    </div>
-                                <% }); %>
-                            </div>
+                <% skillCategories.forEach(function(category) { %>
+                    <div class="skill-category glass-card" data-tilt>
+                        <div class="category-icon">
+                            <% if (category.name.includes('Frontend')) { %>
+                                <i class="fas fa-palette"></i>
+                            <% } else if (category.name.includes('Backend')) { %>
+                                <i class="fas fa-server"></i>
+                            <% } else { %>
+                                <i class="fas fa-tools"></i>
+                            <% } %>
                         </div>
-                    <% }); %>
-                <% } else { %>
-                    <div class="skill-category glass-card">
-                        <div class="category-icon"><i class="fas fa-palette"></i></div>
-                        <h3 class="category-title">Frontend</h3>
+
+                        <h3 class="category-title"><%= category.name %></h3>
+
                         <div class="skill-list">
-                            <div class="skill-item"><i class="fab fa-html5"></i><span>HTML5</span></div>
-                            <div class="skill-item"><i class="fab fa-css3-alt"></i><span>CSS3</span></div>
-                            <div class="skill-item"><i class="fab fa-js"></i><span>JavaScript</span></div>
-                            <div class="skill-item"><i class="fab fa-react"></i><span>React</span></div>
+                            <% category.skills.forEach(function(skill) { %>
+                                <div class="skill-item">
+                                    <span><%= skill.name %></span>
+                                </div>
+                            <% }); %>
                         </div>
                     </div>
-                <% } %>
+                <% }); %>
             </div>
         </div>
     </section>
 
+    <!-- PROJECTS SECTION -->
     <section id="projects" class="projects section">
         <div class="container">
             <div class="section-header">
                 <span class="section-tag">Portfolio</span>
                 <h2 class="section-title">Featured Projects</h2>
             </div>
+
             <div class="projects-grid">
-                <% if (projects && projects.length > 0) { %>
-                    <% projects.forEach(function(project, index) { %>
-                        <article class="project-card glass-card" data-tilt style="--delay: <%= index * 0.1 %>s">
-                            <div class="project-image">
-                                <div class="project-placeholder">
-                                    <div class="placeholder-icon">
-                                        <% if (index % 3 === 0) { %>
-                                            <i class="fas fa-shopping-cart"></i>
-                                        <% } else if (index % 3 === 1) { %>
-                                            <i class="fas fa-tasks"></i>
-                                        <% } else { %>
-                                            <i class="fas fa-chart-line"></i>
-                                        <% } %>
-                                    </div>
-                                </div>
-                                <div class="project-overlay">
-                                    <div class="project-links">
-                                        <% if (project.live_url && project.live_url !== '#') { %>
-                                            <a href="<%= project.live_url %>" target="_blank" class="project-link" title="Live Demo">
-                                                <i class="fas fa-external-link-alt"></i>
-                                            </a>
-                                        <% } %>
-                                        <% if (project.github_url && project.github_url !== '#') { %>
-                                            <a href="<%= project.github_url %>" target="_blank" class="project-link" title="View Code">
-                                                <i class="fab fa-github"></i>
-                                            </a>
-                                        <% } %>
-                                    </div>
+                <% projects.forEach(function(project, index) { %>
+                    <article class="project-card glass-card" data-tilt style="--delay: <%= index * 0.1 %>s">
+                        <div class="project-image">
+                            <div class="project-placeholder">
+                                <div class="placeholder-icon">
+                                    <% if (index % 3 === 0) { %>
+                                        <i class="fas fa-shopping-cart"></i>
+                                    <% } else if (index % 3 === 1) { %>
+                                        <i class="fas fa-tasks"></i>
+                                    <% } else { %>
+                                        <i class="fas fa-chart-line"></i>
+                                    <% } %>
                                 </div>
                             </div>
-                            <div class="project-content">
-                                <h3 class="project-title"><%= project.title %></h3>
-                                <p class="project-description"><%= project.description %></p>
-                                <% if (project.technologies) { %>
-                                    <div class="project-tech">
-                                        <% project.technologies.split(',').forEach(function(tech) { %>
-                                            <span class="tech-tag"><%= tech.trim() %></span>
-                                        <% }); %>
-                                    </div>
-                                <% } %>
+                        </div>
+
+                        <div class="project-content">
+                            <h3 class="project-title"><%= project.title %></h3>
+                            <p class="project-description"><%= project.description %></p>
+
+                            <div class="project-tech">
+                                <% project.stack.forEach(function(tech) { %>
+                                    <span class="tech-tag"><%= tech %></span>
+                                <% }); %>
                             </div>
-                        </article>
-                    <% }); %>
-                <% } %>
+                        </div>
+                    </article>
+                <% }); %>
             </div>
         </div>
     </section>
 
+    <!-- CONTACT -->
     <section id="contact" class="contact section">
         <div class="container">
             <div class="section-header">
                 <span class="section-tag">Get In Touch</span>
                 <h2 class="section-title">Let's Work Together</h2>
             </div>
+
             <div class="contact-content">
                 <div class="contact-card glass-card">
-                    <p class="contact-text">I'm always excited to work on new projects and collaborate with amazing people. Feel free to reach out!</p>
-                    
+                    <p class="contact-text">
+                        I'm always excited to work on new projects and collaborate with amazing people.
+                    </p>
+
                     <div class="contact-info">
-                        <a href="mailto:<%= profile ? profile.email : 'hello@example.com' %>" class="contact-item">
+                        <a href="mailto:someone@example.com" class="contact-item">
                             <div class="contact-icon">
                                 <i class="fas fa-envelope"></i>
                             </div>
                             <div class="contact-detail">
                                 <span class="contact-label">Email</span>
-                                <span class="contact-value"><%= profile ? profile.email : 'hello@example.com' %></span>
+                                <span class="contact-value">vanditkatbamna7@gmail.com</span>
                             </div>
                         </a>
                     </div>
-                    
+
                     <div class="social-links">
-                        <% if (socialLinks && socialLinks.length > 0) { %>
-                            <% socialLinks.forEach(function(link) { %>
-                                <a href="<%= link.url %>" target="_blank" class="social-link" title="<%= link.platform %>">
-                                    <i class="<%= link.icon %>"></i>
-                                </a>
-                            <% }); %>
-                        <% } else { %>
-                            <a href="#" class="social-link" title="GitHub"><i class="fab fa-github"></i></a>
-                            <a href="#" class="social-link" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                            <a href="#" class="social-link" title="Instagram"><i class="fab fa-instagram"></i></a>
-                        <% } %>
+                        <% socialLinks.forEach(function(link) { %>
+                            <a href="<%= link.url %>" target="_blank" class="social-link">
+                                <i class="<%= link.icon %>"></i>
+                            </a>
+                        <% }); %>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- FOOTER -->
     <footer class="footer">
         <div class="container">
-            <p>&copy; <%= new Date().getFullYear() %> <%= profile ? profile.name : 'Portfolio' %> -- Portfolio</p>
+            <p>&copy; <%= new Date().getFullYear() %> Vandit Katbamna — Portfolio</p>
         </div>
     </footer>
 
